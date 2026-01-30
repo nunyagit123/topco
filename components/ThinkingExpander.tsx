@@ -12,10 +12,10 @@ export const ThinkingExpander: React.FC<ThinkingExpanderProps> = ({ thought }) =
   if (!thought) return null;
 
   return (
-    <div className="mb-4 border border-indigo-200 dark:border-indigo-900 rounded-lg overflow-hidden bg-indigo-50/50 dark:bg-indigo-900/20">
+    <div className="mb-4 border border-red-200 dark:border-red-900 rounded-lg overflow-hidden bg-red-50/50 dark:bg-red-900/20">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
       >
         <Brain size={14} />
         <span>Thinking Process</span>

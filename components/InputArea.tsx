@@ -50,7 +50,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
   };
 
   return (
-    <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition-all">
+    <div className="border-t border-slate-700 bg-black p-4 transition-all">
       <div className="max-w-4xl mx-auto">
         
         {/* File Preview */}
@@ -76,7 +76,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
         )}
 
         {/* Input Bar */}
-        <div className="flex items-end gap-3 bg-slate-50 dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all shadow-sm">
+        <div className="flex items-end gap-3 bg-black p-2 rounded-xl border border-slate-700 focus-within:ring-2 focus-within:ring-red-500/20 focus-within:border-red-500 transition-all shadow-sm">
           
           <button
             onClick={onClearChat}
@@ -90,7 +90,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
 
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-3 text-slate-400 hover:text-blue-500 transition-colors rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
+            className="p-3 text-slate-400 hover:text-red-500 transition-colors rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800"
             title="Attach File"
           >
             <Paperclip size={20} />
@@ -120,7 +120,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
             className={`p-3 rounded-lg transition-all ${
               (!text.trim() && files.length === 0) || isLoading
                 ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'
+                : 'bg-red-600 hover:bg-red-700 text-white shadow-md'
             }`}
           >
             <Send size={20} />

@@ -37,8 +37,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
         {/* Avatar */}
         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
           isUser 
-            ? 'bg-blue-600 text-white' 
-            : 'bg-emerald-600 text-white'
+            ? 'bg-red-600 text-white' 
+            : 'bg-slate-600 text-white'
         }`}>
           {isUser ? <User size={16} /> : <Bot size={16} />}
         </div>
@@ -48,7 +48,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
           
           <div className={`relative px-4 py-3 rounded-2xl shadow-sm ${
             isUser 
-              ? 'bg-blue-600 text-white rounded-tr-none' 
+              ? 'bg-red-600 text-white rounded-tr-none' 
               : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-tl-none'
           }`}>
             
@@ -89,7 +89,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
                       // Custom styling for code blocks in markdown
                       code({node, className, children, ...props}) {
                          return (
-                            <code className={`${className} ${isUser ? 'bg-blue-700' : 'bg-slate-100 dark:bg-slate-900'} rounded px-1`} {...props}>
+                            <code className={`${className} ${isUser ? 'bg-red-800' : 'bg-slate-100 dark:bg-slate-900'} rounded px-1`} {...props}>
                               {children}
                             </code>
                          )

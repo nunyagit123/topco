@@ -257,7 +257,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden">
+    <div className="flex h-screen bg-black text-slate-100 overflow-hidden">
       {/* Sidebar */}
       <Sidebar 
         sessions={sessions}
@@ -279,7 +279,7 @@ const App: React.FC = () => {
         
         {/* Header (Different based on view) */}
         {currentView === 'chat' && (
-          <header className="flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+          <header className="flex items-center justify-between px-4 py-3 bg-black border-b border-slate-700 flex-shrink-0">
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -287,12 +287,12 @@ const App: React.FC = () => {
               >
                 <Menu size={20} />
               </button>
-              <div className="p-1.5 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-lg shadow-lg text-white">
+              <div className="p-1.5 bg-gradient-to-tr from-red-600 to-red-800 rounded-lg shadow-lg text-white">
                 <Sparkles size={18} />
               </div>
               <div>
-                 <h1 className="font-bold text-base text-slate-800 dark:text-white leading-tight hidden sm:block">Gemini ThinkChat</h1>
-                 <h1 className="font-bold text-base text-slate-800 dark:text-white leading-tight sm:hidden">Gemini</h1>
+                 <h1 className="font-bold text-base text-slate-800 dark:text-white leading-tight hidden sm:block">TopcoBot</h1>
+                 <h1 className="font-bold text-base text-slate-800 dark:text-white leading-tight sm:hidden">Topco</h1>
               </div>
             </div>
             
@@ -320,7 +320,7 @@ const App: React.FC = () => {
         
         {/* Imagine Header (Simplified) */}
         {currentView === 'image-gen' && (
-           <header className="md:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+           <header className="md:hidden flex items-center justify-between px-4 py-3 bg-black border-b border-slate-700 flex-shrink-0">
              <div className="flex items-center gap-3">
                <button 
                  onClick={() => setIsMobileMenuOpen(true)}
@@ -341,7 +341,7 @@ const App: React.FC = () => {
                 {messages.length === 0 ? (
                   <div className="flex-1 flex flex-col items-center justify-center text-slate-400 opacity-60 mt-10">
                     <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                      <Sparkles size={32} className="text-blue-500" />
+                      <Sparkles size={32} className="text-red-500" />
                     </div>
                     <p className="text-lg font-medium text-slate-600 dark:text-slate-300">How can I help you today?</p>
                   </div>

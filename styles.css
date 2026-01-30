@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@theme {
+  /* Change these colors to customize your theme */
+  --color-primary: #3b82f6;      /* Blue - change to any color you want */
+  --color-primary-dark: #2563eb; /* Darker blue for hover states */
+  --color-accent: #8b5cf6;       /* Purple accent - change as needed */
+  --color-accent-dark: #7c3aed;  /* Darker purple for hover */
+}
+
+/* You can also add custom CSS variables for dark mode */
+:root {
+  --background-light: #ffffff;
+  --background-dark: #1a1a1a;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+}

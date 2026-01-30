@@ -79,18 +79,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Container */}
       <div className={`
-        fixed md:relative z-30 flex flex-col h-full w-64 bg-slate-900 text-slate-300 border-r border-slate-800
+        fixed md:relative z-30 flex flex-col h-full w-64 bg-black text-slate-300 border-r border-slate-700
         transition-transform duration-300 ease-in-out
         ${isOpenMobile ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         {/* Main Navigation Tabs */}
-        <div className="p-3 grid grid-cols-2 gap-2 border-b border-slate-800">
+        <div className="p-3 grid grid-cols-2 gap-2 border-b border-slate-700">
            <button
              onClick={() => { onChangeView('chat'); onCloseMobile(); }}
              className={`flex flex-col items-center justify-center p-2 rounded-lg text-xs font-medium transition-all ${
                 currentView === 'chat' 
-                ? 'bg-blue-600 text-white shadow-lg' 
-                : 'hover:bg-slate-800 text-slate-400'
+                ? 'bg-red-600 text-white shadow-lg' 
+                : 'hover:bg-slate-700 text-slate-400'
              }`}
            >
              <MessageSquare size={18} className="mb-1" />
@@ -100,8 +100,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
              onClick={() => { onChangeView('image-gen'); onCloseMobile(); }}
              className={`flex flex-col items-center justify-center p-2 rounded-lg text-xs font-medium transition-all ${
                 currentView === 'image-gen' 
-                ? 'bg-purple-600 text-white shadow-lg' 
-                : 'hover:bg-slate-800 text-slate-400'
+                ? 'bg-red-700 text-white shadow-lg' 
+                : 'hover:bg-slate-700 text-slate-400'
              }`}
            >
              <ImageIcon size={18} className="mb-1" />
@@ -113,13 +113,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {currentView === 'chat' ? (
           <>
             {/* New Chat Button */}
-            <div className="p-4 border-b border-slate-800 flex items-center gap-2">
+            <div className="p-4 border-b border-slate-700 flex items-center gap-2">
               <button
                 onClick={() => {
                   onCreateSession();
                   onCloseMobile();
                 }}
-                className="flex-1 flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white py-2 px-4 rounded-lg transition-colors font-medium text-sm border border-slate-700"
+                className="flex-1 flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded-lg transition-colors font-medium text-sm border border-slate-700"
               >
                 <Plus size={16} />
                 <span>New Chat</span>
@@ -127,7 +127,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               
               <button 
                 onClick={onCloseMobile} 
-                className="md:hidden p-2 hover:bg-slate-800 rounded-lg text-slate-400"
+                className="md:hidden p-2 hover:bg-slate-700 rounded-lg text-slate-400"
               >
                 <X size={20} />
               </button>
@@ -147,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   {sessions.sort((a,b) => b.timestamp - a.timestamp).map((session) => (
                     <div key={session.id} className="relative">
                       {editingSessionId === session.id ? (
-                        <div className="flex items-center gap-1 px-2 py-2 bg-slate-800 rounded-lg border border-blue-500/50">
+                        <div className="flex items-center gap-1 px-2 py-2 bg-black rounded-lg border border-red-500/50">
                           <input
                             ref={inputRef}
                             type="text"
@@ -182,8 +182,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           className={`
                             group relative flex items-center gap-3 px-3 py-3 text-sm rounded-lg text-left transition-colors w-full
                             ${session.id === currentSessionId 
-                              ? 'bg-slate-800 text-white' 
-                              : 'hover:bg-slate-800/50 text-slate-400 hover:text-slate-200'}
+                              ? 'bg-slate-700 text-white' 
+                              : 'hover:bg-slate-700/50 text-slate-400 hover:text-slate-200'}
                           `}
                         >
                           <MessageSquare size={16} className="flex-shrink-0" />
@@ -195,12 +195,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             className={`
                               absolute right-2 flex items-center gap-1
                               ${session.id === currentSessionId ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-                              transition-opacity bg-slate-800/80 backdrop-blur-sm rounded
+                              transition-opacity bg-slate-700/80 backdrop-blur-sm rounded
                             `}
                           >
                             <div
                               onClick={(e) => startEditing(e, session)}
-                              className="p-1 rounded hover:bg-blue-500/20 hover:text-blue-400 cursor-pointer"
+                              className="p-1 rounded hover:bg-red-500/20 hover:text-red-400 cursor-pointer"
                               title="Rename"
                             >
                               <Pencil size={13} />
@@ -223,7 +223,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center p-6 text-center text-slate-500 space-y-4">
-             <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center">
+             <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center">
                 <Sparkles size={32} className="text-purple-500" />
              </div>
              <div>
@@ -234,7 +234,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
              {/* Close button for mobile inside view */}
              <button 
                 onClick={onCloseMobile} 
-                className="md:hidden mt-10 p-2 hover:bg-slate-800 rounded-lg text-slate-400 border border-slate-700"
+                className="md:hidden mt-10 p-2 hover:bg-slate-700 rounded-lg text-slate-400 border border-slate-700"
               >
                 Close Menu
               </button>
@@ -242,11 +242,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-800 flex items-center justify-between">
+        <div className="p-4 border-t border-slate-700 flex items-center justify-between">
           <p className="text-xs text-slate-500">Local Storage Mode</p>
           <button
             onClick={toggleTheme}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors"
             title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}

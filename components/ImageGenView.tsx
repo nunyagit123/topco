@@ -56,7 +56,7 @@ export const ImageGenView: React.FC = () => {
   const currentModelInfo = IMAGE_MODELS.find(m => m.id === selectedModel);
 
   return (
-    <div className="flex-1 h-full flex flex-col bg-slate-50 dark:bg-slate-900 overflow-y-auto">
+    <div className="flex-1 h-full flex flex-col bg-black overflow-y-auto">
        <div className="max-w-4xl mx-auto w-full p-6 flex flex-col h-full">
           
           <div className="mb-4 text-center mt-6">
@@ -141,7 +141,7 @@ export const ImageGenView: React.FC = () => {
                  className={`absolute bottom-3 right-3 p-2 rounded-lg transition-colors ${
                     !prompt.trim() || isLoading 
                     ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'
-                    : 'bg-purple-600 hover:bg-purple-700 text-white'
+                    : 'bg-red-600 hover:bg-red-700 text-white'
                  }`}
                >
                  <Sparkles size={20} />
