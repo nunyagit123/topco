@@ -128,7 +128,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
         </div>
         
         <div className="text-center mt-2">
-           <p className="text-[10px] text-slate-400">Gemini can make mistakes. Check important info.</p>
+           <p className="text-[10px] text-slate-400">TopcoBot can make mistakes. Check important info.</p>
         </div>
       </div>
     </div>

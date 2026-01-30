@@ -7,7 +7,6 @@ import { Message, Role } from '../types';
 let ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const AVAILABLE_MODELS = [
-  { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash (with Search)' },
   { id: 'gemini-3-flash-preview', name: 'Gemini 3.0 Flash' },
   { id: 'gemini-3-pro-preview', name: 'Gemini 3.0 Pro' },
 ];

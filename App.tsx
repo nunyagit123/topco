@@ -6,7 +6,10 @@ import { InputArea } from './components/InputArea';
 import { saveSessionsToStorage, loadSessionsFromStorage } from './utils/localStorage';
 import { Sidebar } from './components/Sidebar';
 import { ImageGenView } from './components/ImageGenView';
-import { Sparkles, ChevronDown, Menu } from 'lucide-react';
+import { LoginScreen } from './components/LoginScreen';
+import { Sparkles, ChevronDown, Menu, LogOut } from 'lucide-react';
+import { auth } from './firebase';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -30,12 +33,23 @@ const createNewSession = (): ChatSession => ({
 });
 
 const App: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState<AppView>('chat');
+  
+  // Auth listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setAuthLoading(false);
+    });
+    return unsubscribe;
+  }, []);
   
   // Theme Management
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -256,6 +270,28 @@ const App: React.FC = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div className="h-screen w-full bg-black flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // Show login screen if not authenticated
+  if (!user) {
+    return <LoginScreen onLoginSuccess={() => {}} />;
+  }
+
   return (
     <div className="flex h-screen bg-black text-slate-100 overflow-hidden">
       {/* Sidebar */}
@@ -313,6 +349,25 @@ const App: React.FC = () => {
                   <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                     <ChevronDown size={14} />
                   </div>
+               </div>
+               
+               {/* User Info & Logout */}
+               <div className="flex items-center gap-2 ml-2">
+                 <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-lg">
+                   {user.photoURL && (
+                     <img src={user.photoURL} alt="Profile" className="w-6 h-6 rounded-full" />
+                   )}
+                   <span className="text-xs text-slate-300 max-w-[100px] truncate">
+                     {user.displayName || user.email}
+                   </span>
+                 </div>
+                 <button
+                   onClick={handleLogout}
+                   className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-colors"
+                   title="Sign out"
+                 >
+                   <LogOut size={18} />
+                 </button>
                </div>
             </div>
           </header>
