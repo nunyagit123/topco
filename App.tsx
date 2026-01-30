@@ -306,8 +306,6 @@ const App: React.FC = () => {
         onCloseMobile={() => setIsMobileMenuOpen(false)}
         currentView={currentView}
         onChangeView={setCurrentView}
-        theme={theme}
-        toggleTheme={toggleTheme}
       />
 
       {/* Main Content Area */}

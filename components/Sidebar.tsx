@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Plus, Trash2, X, Pencil, Check, Sparkles, Image as ImageIcon, Sun, Moon } from 'lucide-react';
+import { MessageSquare, Plus, Trash2, X, Pencil, Check, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { ChatSession, AppView } from '../types';
 
 interface SidebarProps {
@@ -13,8 +13,6 @@ interface SidebarProps {
   onCloseMobile: () => void;
   currentView: AppView;
   onChangeView: (view: AppView) => void;
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ 
@@ -27,9 +25,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isOpenMobile,
   onCloseMobile,
   currentView,
-  onChangeView,
-  theme,
-  toggleTheme
+  onChangeView
 }) => {
   const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
@@ -242,15 +238,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-700 flex items-center justify-between">
+        <div className="p-4 border-t border-slate-700">
           <p className="text-xs text-slate-500">Local Storage Mode</p>
-          <button
-            onClick={toggleTheme}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors"
-            title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
         </div>
       </div>
     </>
