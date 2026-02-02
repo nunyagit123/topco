@@ -95,6 +95,9 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
                          )
                       }
                     }}
+                    // Security: Disable HTML rendering to prevent XSS attacks
+                    disallowedElements={['script', 'iframe', 'object', 'embed', 'form']}
+                    unwrapDisallowed={true}
                   >
                     {displayText}
                   </ReactMarkdown>

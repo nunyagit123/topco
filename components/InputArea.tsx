@@ -1,5 +1,6 @@
-import React, { useState, useRef, ChangeEvent } from 'react';
-import { Send, Paperclip, X, Image as ImageIcon } from 'lucide-react';
+import React, { useState, useRef, ChangeEvent, useMemo } from 'react';
+import { Send, Paperclip, X, Image as ImageIcon, AlertCircle } from 'lucide-react';
+import { validateFiles, validateMessageText, RateLimiter, INPUT_CONFIG, FILE_UPLOAD_CONFIG } from '../utils/security';
 
 interface InputAreaProps {
   onSendMessage: (text: string, attachments: File[]) => void;
@@ -10,11 +11,22 @@ interface InputAreaProps {
 export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, onClearChat }) => {
   const [text, setText] = useState('');
   const [files, setFiles] = useState<File[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const rateLimiter = useMemo(() => new RateLimiter(INPUT_CONFIG.rateLimitMs), []);
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    const newText = e.target.value;
+    
+    // Enforce max length
+    if (newText.length > INPUT_CONFIG.maxMessageLength) {
+      setError(`Message exceeds ${INPUT_CONFIG.maxMessageLength} characters`);
+      return;
+    }
+    
+    setError(null);
+    setText(newText);
     // Auto-resize
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -24,7 +36,19 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
+      const newFiles = Array.from(e.target.files);
+      const allFiles = [...files, ...newFiles];
+      
+      // Validate files
+      const validation = validateFiles(allFiles);
+      if (!validation.valid) {
+        setError(validation.error || 'Invalid file');
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
+      
+      setError(null);
+      setFiles(allFiles);
     }
     // Reset input so same file can be selected again if needed
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -32,10 +56,38 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
+    setError(null);
   };
 
   const handleSend = () => {
     if ((!text.trim() && files.length === 0) || isLoading) return;
+    
+    // Rate limiting check
+    if (!rateLimiter.canProceed()) {
+      const remaining = Math.ceil(rateLimiter.getRemainingTime() / 1000);
+      setError(`Please wait ${remaining} second(s) before sending another message`);
+      return;
+    }
+    
+    // Validate message text
+    if (text.trim()) {
+      const textValidation = validateMessageText(text);
+      if (!textValidation.valid) {
+        setError(textValidation.error || 'Invalid message');
+        return;
+      }
+    }
+    
+    // Validate files
+    if (files.length > 0) {
+      const fileValidation = validateFiles(files);
+      if (!fileValidation.valid) {
+        setError(fileValidation.error || 'Invalid files');
+        return;
+      }
+    }
+    
+    setError(null);
     onSendMessage(text, files);
     setText('');
     setFiles([]);
@@ -52,6 +104,14 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
   return (
     <div className="border-t border-slate-700 bg-black p-4 transition-all">
       <div className="max-w-4xl mx-auto">
+        
+        {/* Error Message */}
+        {error && (
+          <div className="mb-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-2">
+            <AlertCircle size={16} className="text-red-500 flex-shrink-0" />
+            <span className="text-sm text-red-500">{error}</span>
+          </div>
+        )}
         
         {/* File Preview */}
         {files.length > 0 && (
@@ -101,6 +161,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSendMessage, isLoading, 
             onChange={handleFileChange}
             className="hidden"
             multiple
+            accept={FILE_UPLOAD_CONFIG.allowedMimeTypes.join(',')}
           />
 
           <textarea
