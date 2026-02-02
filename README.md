@@ -117,12 +117,3 @@ src/
 
 - `gemini-2.5-flash-image` — Fast image generation
 - `gemini-3-pro-image-preview` — High-quality images *(requires paid project key)*
-
----
-
-## 📄 License
-
-This repository is licensed under the GNU General Public License v3.0.
-See the `LICENSE` file for details.
-
----
