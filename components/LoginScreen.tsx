@@ -51,6 +51,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         errorMessage = 'Password should be at least 6 characters';
       } else if (err.code === 'auth/invalid-email') {
         errorMessage = 'Invalid email address';
+      } else if (err.code === 'auth/invalid-credential') {
+        errorMessage = "Invalid credentials. Don't have an account? Sign up below.";
       } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
         errorMessage = 'Invalid email or password';
       } else if (err.message) {
